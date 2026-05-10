@@ -87,12 +87,18 @@ st.divider()
 st.header("Chapter 3: The Cost of a Late Package")
 st.write("What happens when a package is late? It leads to a 'Complaint-to-Detractor' spiral.")
 
-# Complaint Distribution Pivot
+# Corrected Pivot for Complaint Distribution
+# .reset_index() now creates 'issue_type' and 'count' columns
 comp_dist = complaints['issue_type'].value_counts().reset_index()
-fig_pie = px.pie(comp_dist, values='issue_type', names='index', 
-                 title="Primary Complaint Drivers", hole=0.5)
-st.plotly_chart(fig_pie)
 
+# Update names and values to match the new Plotly requirements
+fig_pie = px.pie(comp_dist, 
+                 values='count',      # The number of complaints
+                 names='issue_type',  # The type of issue (Late Delivery, etc.)
+                 title="Primary Complaint Drivers", 
+                 hole=0.5)
+
+st.plotly_chart(fig_pie, use_container_width=True)
 st.info("**Observation:** 32% of complaints in Nagpur are 'Fake Delivery Attempts'—a behavior that destroys customer trust immediately.")
 
 # --- SECTION 4: THE RESOLUTION (RECOMMENDATIONS) ---
